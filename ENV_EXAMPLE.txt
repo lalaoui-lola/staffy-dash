@@ -1,0 +1,33 @@
+# ========================================
+# FICHIER DE CONFIGURATION .env.local
+# ========================================
+# 
+# INSTRUCTIONS :
+# 1. Créez un fichier nommé ".env.local" (sans .txt) à la racine du projet
+# 2. Copiez le contenu ci-dessous dans ce fichier
+# 3. Remplacez les valeurs par vos vraies clés Supabase
+# 4. Sauvegardez le fichier
+# 5. Redémarrez le serveur de développement (npm run dev)
+#
+# ========================================
+
+# URL de votre projet Supabase
+# Trouvez-la dans : Settings > API > Project URL
+# Format : https://xxxxxxxxxxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_URL=https://xxxxxxxxxxxxx.supabase.co
+
+# Clé publique anonyme de Supabase
+# Trouvez-la dans : Settings > API > Project API keys > anon public
+# C'est une longue chaîne de caractères
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh4eHh4eHh4eHh4eHh4eHh4eHh4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODAwMDAwMDAsImV4cCI6MTk5NTU3NjAwMH0.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+# ========================================
+# NOTES IMPORTANTES :
+# ========================================
+# 
+# - Ne partagez JAMAIS ces clés publiquement
+# - Le fichier .env.local est déjà dans .gitignore
+# - Ces clés sont spécifiques à votre projet Supabase
+# - Redémarrez toujours le serveur après modification
+#
+# ========================================

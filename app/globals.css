@@ -1,0 +1,144 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 14, 58, 64; /* #0E3A40 - Brand Dark */
+  --background-start-rgb: 238, 242, 242; /* #EEF2F2 - Brand Light */
+  --background-end-rgb: 255, 255, 255;
+  --brand-teal: 23, 92, 100; /* #175C64 */
+  --brand-peach: 247, 199, 187; /* #F7C7BB */
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  /* Animations personnalisées */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fadeInDown {
+    animation: fadeInDown 0.6s ease-out;
+  }
+  
+  .animate-fadeInUp {
+    animation: fadeInUp 0.6s ease-out;
+  }
+  
+  .animate-fadeInRight {
+    animation: fadeInRight 0.6s ease-out;
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-slideDown {
+    animation: slideDown 0.3s ease-out;
+  }
+
+  .animate-slideUp {
+    animation: slideUp 0.6s ease-out;
+  }
+
+  /* Animation float pour le logo */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Animation glow pour le logo */
+  @keyframes glow {
+    0%, 100% {
+      filter: drop-shadow(0 0 10px rgba(23, 92, 100, 0.3));
+    }
+    50% {
+      filter: drop-shadow(0 0 20px rgba(23, 92, 100, 0.6)) drop-shadow(0 0 30px rgba(247, 199, 187, 0.4));
+    }
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite;
+  }
+}
