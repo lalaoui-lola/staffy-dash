@@ -74,13 +74,13 @@ export default function LeadTable({ leads, onEdit, onDelete, canEdit = false, ca
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex flex-col">
                     <div className="text-sm font-medium text-gray-900">
-                      {lead.prenom} {lead.nom}
+                      {lead.nom_client}
                     </div>
                     <div className="text-sm text-gray-500 flex items-center mt-1">
-                      {lead.email && (
+                      {lead.mail && (
                         <span className="flex items-center mr-3">
                           <Mail className="h-3 w-3 mr-1" />
-                          {lead.email}
+                          {lead.mail}
                         </span>
                       )}
                       {lead.telephone && (
@@ -96,10 +96,7 @@ export default function LeadTable({ leads, onEdit, onDelete, canEdit = false, ca
                   <div className="flex items-center text-sm text-gray-900">
                     <Building className="h-4 w-4 mr-2 text-gray-400" />
                     <div>
-                      <div className="font-medium">{lead.entreprise || '-'}</div>
-                      {lead.poste && (
-                        <div className="text-xs text-gray-500">{lead.poste}</div>
-                      )}
+                      <div className="font-medium">{lead.nom_societe || '-'}</div>
                     </div>
                   </div>
                 </td>

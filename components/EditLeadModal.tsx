@@ -44,9 +44,11 @@ export default function EditLeadModal({ lead, onClose, onLeadUpdated }: EditLead
     setLoading(true)
 
     try {
+      const updateData = formData as any;
       const { error: updateError } = await supabase
         .from('leads')
-        .update(formData)
+        // @ts-ignore - Supabase type inference issue
+        .update(updateData)
         .eq('id', lead.id)
 
       if (updateError) {
