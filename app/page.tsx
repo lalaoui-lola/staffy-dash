@@ -22,9 +22,11 @@ export default function Home() {
         .eq('id', session.user.id)
         .single()
 
-      if (profile) {
+      const typedProfile = profile as { role: string } | null
+
+      if (typedProfile) {
         // Rediriger selon le rôle
-        switch (profile.role) {
+        switch (typedProfile.role) {
           case 'administrateur':
             router.push('/admin')
             break
