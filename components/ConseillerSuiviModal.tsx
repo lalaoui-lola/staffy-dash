@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { Database, StatutConseiller } from '@/lib/database.types'
 import { supabase } from '@/lib/supabase'
-import { X, CheckCircle, XCircle, Phone, MessageSquare } from 'lucide-react'
+import { X, MessageSquare, CheckCircle, XCircle, Phone } from 'lucide-react'
 
 type Lead = Database['public']['Tables']['leads']['Row']
 
@@ -34,14 +34,16 @@ export default function ConseillerSuiviModal({
     setError('')
 
     try {
+      const updateData = {
+        statut_conseiller: statut,
+        commentaire_conseiller: commentaire,
+        date_suivi_conseiller: new Date().toISOString(),
+        conseiller_suivi_id: conseillerId
+      };
+      // @ts-ignore - Supabase type inference issue
       const { error: updateError } = await supabase
         .from('leads')
-        .update({
-          statut_conseiller: statut,
-          commentaire_conseiller: commentaire,
-          date_suivi_conseiller: new Date().toISOString(),
-          conseiller_suivi_id: conseillerId
-        })
+        .update(updateData)
         .eq('id', lead.id)
 
       if (updateError) throw updateError
@@ -59,7 +61,7 @@ export default function ConseillerSuiviModal({
 
   const statutOptions = [
     { value: 'ok' as const, label: 'OK', icon: CheckCircle, color: 'green' },
-    { value: 'non_ok' as const, label: 'Non OK', icon: XCircle, color: 'red' },
+    { value: 'nok' as const, label: 'Non OK', icon: XCircle, color: 'red' },
     { value: 'rappeler' as const, label: 'À Rappeler', icon: Phone, color: 'yellow' }
   ]
 

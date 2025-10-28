@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import { Database } from '@/lib/database.types'
 import { X, UserPlus, Mail, Lock, User, Shield } from 'lucide-react'
 import { UserRole } from '@/lib/database.types'
 
@@ -53,7 +54,7 @@ export default function AddUserModal({ onClose, onUserAdded }: AddUserModalProps
             email: email,
             full_name: fullName,
             role: role,
-          })
+          } as any)
 
         if (profileError) {
           setError('Utilisateur créé mais erreur lors de l\'assignation du rôle: ' + profileError.message)
