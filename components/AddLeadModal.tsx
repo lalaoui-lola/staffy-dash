@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import { Database } from '@/lib/database.types'
 import { X, Building2, User, Phone, Mail, Calendar, Clock, MessageSquare, FileText, MapPin, Hash, CheckCircle } from 'lucide-react'
 
 interface AddLeadModalProps {
@@ -49,7 +50,7 @@ export default function AddLeadModal({ onClose, onLeadAdded, agentId, agentName 
           qualite: 'non_valide', // Par défaut non validé, seul l'admin peut changer
           agent_id: agentId,
           created_by: agentId,
-        })
+        } as any)
 
       if (insertError) {
         setError(insertError.message)
