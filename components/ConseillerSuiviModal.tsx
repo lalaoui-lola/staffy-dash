@@ -61,7 +61,7 @@ export default function ConseillerSuiviModal({
 
   const statutOptions = [
     { value: 'ok' as const, label: 'OK', icon: CheckCircle, color: 'green' },
-    { value: 'nok' as const, label: 'Non OK', icon: XCircle, color: 'red' },
+    { value: 'non_ok' as const, label: 'Non OK', icon: XCircle, color: 'red' },
     { value: 'rappeler' as const, label: 'À Rappeler', icon: Phone, color: 'yellow' }
   ]
 
