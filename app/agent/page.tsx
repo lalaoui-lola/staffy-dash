@@ -71,13 +71,15 @@ export default function AgentDashboard() {
       .eq('id', session.user.id)
       .single()
 
-    if (!profileData || profileData.role !== 'agent') {
+    const typedProfile = profileData as Profile | null
+
+    if (!typedProfile || typedProfile.role !== 'agent') {
       router.push('/login')
       return
     }
 
     setUser(session.user)
-    setProfile(profileData)
+    setProfile(typedProfile)
     loadLeads(session.user.id)
   }
 
@@ -94,7 +96,8 @@ export default function AgentDashboard() {
       .order('created_at', { ascending: false })
 
     if (leadsData) {
-      setLeads(leadsData)
+      const typedLeadsData = leadsData as LeadWithConseiller[]
+      setLeads(typedLeadsData)
       
       // Calculer les statistiques avec la date locale du PC
       const now = new Date()
@@ -129,24 +132,24 @@ export default function AgentDashboard() {
         jourSemaine: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'][currentDay],
         lundi: mondayStr,
         vendredi: fridayStr,
-        totalLeads: leadsData.length
+        totalLeads: typedLeadsData.length
       })
       
-      const rdvCeMois = leadsData.filter(l => {
+      const rdvCeMois = typedLeadsData.filter(l => {
         if (!l.date_rdv) return false
         const rdvDate = new Date(l.date_rdv)
         return rdvDate.getMonth() === currentMonth && rdvDate.getFullYear() === currentYear
       }).length
 
       // RDV créés aujourd'hui
-      const rdvAujourdhui = leadsData.filter(l => {
+      const rdvAujourdhui = typedLeadsData.filter(l => {
         if (!l.created_at) return false
         const createdStr = l.created_at.split('T')[0]
         return createdStr === today
       }).length
 
       // RDV créés cette semaine (lundi à vendredi)
-      const rdvCetteSemaine = leadsData.filter(l => {
+      const rdvCetteSemaine = typedLeadsData.filter(l => {
         if (!l.created_at) return false
         const createdStr = l.created_at.split('T')[0]
         return createdStr >= mondayStr && createdStr <= fridayStr
@@ -159,7 +162,7 @@ export default function AgentDashboard() {
         dayDate.setDate(monday.getDate() + index)
         const dayString = `${dayDate.getFullYear()}-${String(dayDate.getMonth() + 1).padStart(2, '0')}-${String(dayDate.getDate()).padStart(2, '0')}`
         
-        const count = leadsData.filter(l => {
+        const count = typedLeadsData.filter(l => {
           if (!l.created_at) return false
           // Extraire juste la date (YYYY-MM-DD) de created_at qui est au format ISO
           const createdStr = l.created_at.split('T')[0]
@@ -176,11 +179,11 @@ export default function AgentDashboard() {
       setWeeklyData(weekData)
 
       setStats({
-        totalLeads: leadsData.length,
-        valides: leadsData.filter(l => l.qualite === 'valide').length,
-        nonValides: leadsData.filter(l => l.qualite === 'non_valide').length,
+        totalLeads: typedLeadsData.length,
+        valides: typedLeadsData.filter(l => l.qualite === 'valide').length,
+        nonValides: typedLeadsData.filter(l => l.qualite === 'non_valide').length,
         rdvCeMois: rdvCeMois,
-        rdvOk: leadsData.filter(l => l.statut_conseiller === 'ok').length,
+        rdvOk: typedLeadsData.filter(l => l.statut_conseiller === 'ok').length,
         rdvAujourdhui: rdvAujourdhui,
         rdvCetteSemaine: rdvCetteSemaine,
       })

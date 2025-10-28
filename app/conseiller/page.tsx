@@ -60,13 +60,15 @@ export default function ConseillerDashboard() {
       .eq('id', session.user.id)
       .single()
 
-    if (!profileData || profileData.role !== 'conseiller') {
+    const typedProfile = profileData as Profile | null
+
+    if (!typedProfile || typedProfile.role !== 'conseiller') {
       router.push('/login')
       return
     }
 
     setUser(session.user)
-    setProfile(profileData)
+    setProfile(typedProfile)
     loadLeads(session.user.id)
   }
 
@@ -97,7 +99,8 @@ export default function ConseillerDashboard() {
     }
 
     if (leadsData) {
-      setLeads(leadsData as LeadWithAgent[])
+      const typedLeadsData = leadsData as LeadWithAgent[]
+      setLeads(typedLeadsData)
       
       // Calculer les statistiques
       const today = new Date()
@@ -119,33 +122,33 @@ export default function ConseillerDashboard() {
       const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0, 23, 59, 59, 999)
       
       // Nombre de RDV validés qualité
-      const nombreRdv = leadsData.length
+      const nombreRdv = typedLeadsData.length
       
       // Nombre de RDV OK (statut_conseiller = 'ok')
-      const nombreRdvOk = leadsData.filter(l => l.statut_conseiller === 'ok').length
+      const nombreRdvOk = typedLeadsData.filter(l => l.statut_conseiller === 'ok').length
       
       // RDV aujourd'hui
-      const rdvAujourdhui = leadsData.filter(l => l.date_rdv === todayStr).length
+      const rdvAujourdhui = typedLeadsData.filter(l => l.date_rdv === todayStr).length
       
       // Taux OK
       const tauxOk = nombreRdv > 0 ? Math.round((nombreRdvOk / nombreRdv) * 100) : 0
       
       // RDV cette semaine
-      const rdvCetteSemaine = leadsData.filter(l => {
+      const rdvCetteSemaine = typedLeadsData.filter(l => {
         if (!l.date_rdv) return false
         const rdvDate = new Date(l.date_rdv + 'T00:00:00')
         return rdvDate >= startOfWeek && rdvDate <= endOfWeek
       }).length
       
       // RDV ce mois
-      const rdvCeMois = leadsData.filter(l => {
+      const rdvCeMois = typedLeadsData.filter(l => {
         if (!l.date_rdv) return false
         const rdvDate = new Date(l.date_rdv + 'T00:00:00')
         return rdvDate >= startOfMonth && rdvDate <= endOfMonth
       }).length
       
       // RDV pris aujourd'hui (date_creation = aujourd'hui)
-      const rdvPrisAujourdhui = leadsData.filter(l => {
+      const rdvPrisAujourdhui = typedLeadsData.filter(l => {
         if (!l.created_at) return false
         const createdDate = new Date(l.created_at).toISOString().split('T')[0]
         return createdDate === todayStr
