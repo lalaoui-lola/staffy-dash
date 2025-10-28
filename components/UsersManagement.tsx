@@ -38,7 +38,7 @@ export default function UsersManagement({ users, onUserUpdated }: UsersManagemen
       // Appeler la fonction Supabase pour supprimer l'utilisateur
       const { error: deleteError } = await supabase.rpc('delete_user', {
         user_id: userId
-      })
+      } as any)
 
       if (deleteError) throw deleteError
 
@@ -63,6 +63,7 @@ export default function UsersManagement({ users, onUserUpdated }: UsersManagemen
     try {
       const { error: updateError } = await supabase
         .from('profiles')
+        // @ts-ignore - Supabase type inference issue
         .update({
           full_name: editingUser.full_name,
           role: editingUser.role
@@ -99,7 +100,7 @@ export default function UsersManagement({ users, onUserUpdated }: UsersManagemen
       const { error: pwdError } = await supabase.rpc('change_user_password', {
         user_id: changingPassword.id,
         new_password: newPassword
-      })
+      } as any)
 
       if (pwdError) throw pwdError
 

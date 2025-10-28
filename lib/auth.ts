@@ -48,5 +48,6 @@ export async function getUserRole(): Promise<UserRole | null> {
   if (!user) return null
   
   const { data } = await getUserProfile(user.id)
-  return data?.role || null
+  const typedData = data as { role: UserRole } | null
+  return typedData?.role || null
 }

@@ -14,19 +14,17 @@ interface LeadTableProps {
 }
 
 const statusColors = {
-  nouveau: 'bg-blue-100 text-blue-800',
-  contacte: 'bg-yellow-100 text-yellow-800',
-  qualifie: 'bg-[#F7C7BB]/30 text-purple-800',
-  negocie: 'bg-orange-100 text-orange-800',
-  gagne: 'bg-green-100 text-green-800',
-  perdu: 'bg-red-100 text-red-800',
+  en_attente: 'bg-gray-100 text-gray-800',
+  ok: 'bg-green-100 text-green-800',
+  non_ok: 'bg-red-100 text-red-800',
+  rappeler: 'bg-yellow-100 text-yellow-800',
 }
 
 const statusLabels = {
-  nouveau: 'Nouveau',
-  contacte: 'Contacté',
-  qualifie: 'Qualifié',
-  negocie: 'Négocié',
+  en_attente: 'En attente',
+  ok: 'OK',
+  non_ok: 'Non OK',
+  rappeler: 'À rappeler',
   gagne: 'Gagné',
   perdu: 'Perdu',
 }
@@ -101,15 +99,15 @@ export default function LeadTable({ leads, onEdit, onDelete, canEdit = false, ca
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColors[lead.statut]}`}>
-                    {statusLabels[lead.statut]}
+                  <span className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColors[lead.statut_conseiller as keyof typeof statusColors] || 'bg-gray-100 text-gray-800'}`}>
+                    {statusLabels[lead.statut_conseiller as keyof typeof statusLabels] || lead.statut_conseiller}
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                  {lead.budget ? `${lead.budget.toLocaleString('fr-FR')} €` : '-'}
+                  {lead.departement || '-'}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {lead.source || '-'}
+                  {new Date(lead.date_creation).toLocaleDateString('fr-FR')}
                 </td>
                 {(canEdit || canDelete) && (
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
