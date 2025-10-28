@@ -40,9 +40,9 @@ export default function ConseillerSuiviModal({
         date_suivi_conseiller: new Date().toISOString(),
         conseiller_suivi_id: conseillerId
       };
-      // @ts-ignore - Supabase type inference issue
       const { error: updateError } = await supabase
         .from('leads')
+        // @ts-ignore - Supabase type inference issue
         .update(updateData)
         .eq('id', lead.id)
 
